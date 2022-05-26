@@ -6,16 +6,16 @@
 
 	// Create the notes
 	export let notes = [
-		{ note: { keys: ['a/3'], duration: '8' } },
-		{ note: { keys: ['b/3'], duration: '8' } },
-		{ note: { keys: ['c#/4'], duration: '8' }, accidental: '#' },
-		{ note: { keys: ['d/4'], duration: '8' } },
+		{ keys: ['a/3'], duration: '8' },
+		{ keys: ['b/3'], duration: '8' },
+		{ keys: ['c#/4'], duration: '8' },
+		{ keys: ['d/4'], duration: '8' },
 
-		{ note: { keys: ['e/4'], duration: '8' } },
-		{ note: { keys: ['f/4'], duration: '8' } },
-		{ note: { keys: ['f#/4'], duration: '8' }, accidental: '#' },
-		{ note: { keys: ['g#/4'], duration: '8' }, accidental: '#' },
-		{ note: { keys: ['a/4'], duration: '16' }, },
+		{ keys: ['e/4'], duration: '8' },
+		{ keys: ['f/4'], duration: '8' },
+		{ keys: ['f#/4'], duration: '8' },
+		{ keys: ['g#/4'], duration: '8' },
+		{ keys: ['a/4'], duration: '16' },
 	];
 
 	onMount(async () => {
@@ -39,12 +39,14 @@
 
 		// Create the notes
 		const staveNotes = notes.map(function (options) {
-			let staveNote = new VF.StaveNote(options.note);
+			let staveNote = new VF.StaveNote(options);
 
-			if (options.accidental) {
-				let modifier = new VF.Accidental(options.accidental);
-				staveNote.addModifier(modifier, 0);
-			}
+      options.keys.forEach((key, idx) => {
+        if (key.includes('#')) {
+				  let modifier = new VF.Accidental('#');
+				  staveNote.addModifier(modifier, idx);
+        }
+      })
 
 			return staveNote;
 		});
