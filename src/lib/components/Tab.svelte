@@ -22,7 +22,7 @@
     const renderer = new VF.Vex.Flow.Renderer(target, VF.Vex.Flow.Renderer.Backends.SVG);
 
     const context = renderer.getContext();
-    const stave = new VF.TabStave(0, 0, 400);
+    const stave = new VF.TabStave(0, -50, 400);
     stave.addClef('tab').setContext(context).draw();
 
     const tabNotes = notes.map(options => new VF.TabNote(options));
@@ -32,5 +32,5 @@
 </script>
 
 <div class="w-full">
-  <svg viewBox="0 0 401 125" class="mx-auto w-full" bind:this={target} />
+  <svg viewBox="0 0 401 75" class="mx-auto w-full" bind:this={target} />
 </div>
