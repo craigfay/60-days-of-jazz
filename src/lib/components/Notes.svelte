@@ -3,24 +3,19 @@
   let target;
 
   export let clef = 'treble';
-  export let timeSignature = '4/4';
 
   // Create the notes
   export let notes = [
-    // A quarter-note C.
-    { keys: ['c/4'], duration: '8' },
+    { note: { keys: ['a/3'], duration: '8' } },
+    { note: { keys: ['b/3'], duration: '8' } },
+    { note: { keys: ['c#/4'], duration: '8' }, accidental: '#', },
+    { note: { keys: ['d/4'], duration: '8' }, },
 
-    { keys: ['c/4'], duration: '16' },
-
-    { keys: ['c/4'], duration: '16' },
-
-    // A quarter-note D.
-    { keys: ['d/4'], duration: 'q' },
-
-    { keys: ['b/3'], duration: 'qr' },
-
-    // A C-Major chord.
-    { keys: ['c/4', 'e/4', 'g/4'], duration: 'q' },
+    { note: { keys: ['e/4'], duration: '8' }, },
+    { note: { keys: ['f/4'], duration: '8' }, },
+    { note: { keys: ['f#/4'], duration: '8' }, accidental: '#' },
+    { note: { keys: ['g#/4'], duration: '8' }, accidental: '#' },
+    // { note: { keys: ['a/4'], duration: '16' }, },
   ];
 
   onMount(async () => {
@@ -38,20 +33,30 @@
     const stave = new Stave(0, 0, 400);
 
     // Add a clef and time signature.
-    stave.addClef(clef).addTimeSignature(timeSignature);
+    stave.addClef(clef)
 
     // Connect it to the rendering context and draw!
     stave.setContext(context).draw();
 
     // Create the notes
-    const staveNotes = notes.map(options => new VF.StaveNote(options));
+    const staveNotes = notes.map(function(options) {
+      let staveNote = new VF.StaveNote(options.note);
+
+      if (options.accidental) {
+        let modifier = new VF.Accidental(options.accidental);
+        staveNote.addModifier(modifier, 0)
+      }
+
+      return staveNote
+    })
 
     // Create a voice in 4/4 and add above notes
     const voice = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // const voice = new VF.Voice();
     voice.addTickables(staveNotes);
 
     // Format and justify the notes to 400 pixels.
-    new VF.Formatter().joinVoices([voice]).format([voice], 400);
+    new VF.Formatter().joinVoices([voice]).format([voice], 400 - 40);
 
     // Render voice
     voice.draw(context, stave);

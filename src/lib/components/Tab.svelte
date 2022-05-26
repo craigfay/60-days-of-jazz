@@ -2,24 +2,17 @@
   import { onMount } from 'svelte';
 
   export let notes = [
-    {
-      positions: [{ str: 3, fret: 7 }],
-      duration: 'q'
-    },
+    { positions: [{ str: 6, fret: 5 }], duration: '16' },
+    { positions: [{ str: 6, fret: 7 }], duration: '16' },
 
-    {
-      positions: [
-        { str: 2, fret: 10 },
-        { str: 3, fret: 9 },
-        { str: 4, fret: 8 }
-      ],
-      duration: 'q'
-    },
+    { positions: [{ str: 5, fret: 4 }], duration: '16' },
+    { positions: [{ str: 5, fret: 5 }], duration: '16' },
+    { positions: [{ str: 5, fret: 7 }], duration: '16' },
+    { positions: [{ str: 5, fret: 8 }], duration: '16' },
 
-    {
-      positions: [{ str: 2, fret: 5 }],
-      duration: 'h'
-    },
+    { positions: [{ str: 4, fret: 4 }], duration: '16' },
+    { positions: [{ str: 4, fret: 6 }], duration: '16' },
+    { positions: [{ str: 4, fret: 7 }], duration: '16' },
   ];
 
   let target;
