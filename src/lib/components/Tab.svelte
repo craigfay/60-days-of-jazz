@@ -31,6 +31,6 @@
   });
 </script>
 
-<div class="w-full">
+<div class="w-full p-4">
   <svg viewBox="0 0 401 75" class="mx-auto w-full" bind:this={target} />
 </div>
