@@ -1,7 +1,7 @@
 <script>
-  import Notes from '$lib/components/Notes.svelte'
-  import Tab from '$lib/components/Tab.svelte'
+  import Staff from '$lib/components/StaffNotation.svelte'
+  import Tab from '$lib/components/TabNotation.svelte'
 </script>
 
-<Notes />
+<Staff />
 <Tab />
