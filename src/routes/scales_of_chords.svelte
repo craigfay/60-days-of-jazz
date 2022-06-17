@@ -1,5 +1,5 @@
 <script lang="ts">
-  import StaffNotation from '$lib/components/StaffNotation.svelte';
+  import StaffNotation, { Articulation as StaffArticulation } from '$lib/components/StaffNotation.svelte';
   import TabNotation from '$lib/components/TabNotation.svelte';
   import { guitarStandardTuning, pitchUp } from '$lib/util';
   import type { ChordQuality } from '$lib/util';
@@ -13,7 +13,7 @@
     return chordCopy;
   }
 
-  function makeScaleOfChords(rootNote = 'e/3', quality: ChordQuality) {
+  function makeScaleOfChords(rootNote = 'e/3', quality: ChordQuality): StaffArticulation {
     let tabArticulation = { duration: '8', fingerings: [] };
     let staffArticulation = { duration: '8', pitches: [] };
     let startingFret = 0;
@@ -26,7 +26,7 @@
       }
     }
 
-
+    return staffArticulation;
 
   }
 

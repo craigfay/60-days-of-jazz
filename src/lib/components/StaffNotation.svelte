@@ -1,17 +1,19 @@
 <script context="module" lang="ts">
+  import type { OctaveAwarePitch } from '$lib/util';
+
   export type Articulation = {
-    fingerings: Array<{ str: number, fret: number }>,
+    pitches: Array<OctaveAwarePitch>,
     duration: '1' | '4' | '8' | '16',
   }
 </script>
 
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   let target;
 
   export let clef = 'treble';
 
-  export let articulations = [
+  export let articulations: Articulation[] = [
     { pitches: ['a/3'], duration: '8' },
     { pitches: ['b/3'], duration: '8' },
     { pitches: ['c#/4'], duration: '8' },
