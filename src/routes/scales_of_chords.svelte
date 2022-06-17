@@ -41,7 +41,7 @@
 			});
 
 			let articulations = {
-				duration: '16',
+				duration: '4',
 				pitches: straightenOctaves(pitches)
 			} as StaffArticulation;
 
