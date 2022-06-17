@@ -1,4 +1,4 @@
-export const chromaticScale = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b']
+export const chromaticScale: Pitch[] = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#']
 
 export const guitarStandardTuning = {
   6: 'e/3',
@@ -69,4 +69,30 @@ export function applyInversion(semitoneDistances = [], n = 1) {
   return result
 }
 
-export type OctaveAwarePitch = | "c/0" | "c#/0" | "d/0" | "d#/0" | "e/0" | "f/0" | "f#/0" | "g/0" | "g#/0" | "a/0" | "a#/0" | "b/0" | "c/1" | "c#/1" | "d/1" | "d#/1" | "e/1" | "f/1" | "f#/1" | "g/1" | "g#/1" | "a/1" | "a#/1" | "b/1" | "c/2" | "c#/2" | "d/2" | "d#/2" | "e/2" | "f/2" | "f#/2" | "g/2" | "g#/2" | "a/2" | "a#/2" | "b/2" | "c/3" | "c#/3" | "d/3" | "d#/3" | "e/3" | "f/3" | "f#/3" | "g/3" | "g#/3" | "a/3" | "a#/3" | "b/3" | "c/4" | "c#/4" | "d/4" | "d#/4" | "e/4" | "f/4" | "f#/4" | "g/4" | "g#/4" | "a/4" | "a#/4" | "b/4" | "c/5" | "c#/5" | "d/5" | "d#/5" | "e/5" | "f/5" | "f#/5" | "g/5" | "g#/5" | "a/5" | "a#/5" | "b/5" | "c/6" | "c#/6" | "d/6" | "d#/6" | "e/6" | "f/6" | "f#/6" | "g/6" | "g#/6" | "a/6" | "a#/6" | "b/6" | "c/7" | "c#/7" | "d/7" | "d#/7" | "e/7" | "f/7" | "f#/7" | "g/7" | "g#/7" | "a/7" | "a#/7" | "b/7" | "c/8" | "c#/8" | "d/8" | "d#/8" | "e/8" | "f/8" | "f#/8" | "g/8" | "g#/8" | "a/8" | "a#/8" | "b/8"
+export function octaveUnaware(pitch: OctaveAwarePitch): Pitch {
+  return pitch.split('/')[0] as Pitch;
+}
+
+export function numericOctave(pitch: OctaveAwarePitch): number {
+  return parseInt(pitch.split('/')[1]);
+}
+
+export function straightenOctaves(pitches: OctaveAwarePitch[]): OctaveAwarePitch[] {
+  let [firstPitch] = pitches;
+  let lastScaleIdx = chromaticScale.indexOf(octaveUnaware(firstPitch))
+  let octaveNum = numericOctave(firstPitch)
+
+  return pitches.map((pitch) => {
+    let octaveUnawarePitch = octaveUnaware(pitch);
+    let thisScaleIdx = chromaticScale.indexOf(octaveUnawarePitch)
+    
+    if (thisScaleIdx < lastScaleIdx) { octaveNum += 1; }
+    lastScaleIdx = thisScaleIdx;
+
+    return `${octaveUnawarePitch}/${octaveNum}` as OctaveAwarePitch;
+  })
+}
+
+
+export type Pitch = "c" | "c#" | "d" | "d#" | "e" | "f" | "f#" | "g" | "g#" | "a" | "a#" | "b";
+export type OctaveAwarePitch = "c/0" | "c#/0" | "d/0" | "d#/0" | "e/0" | "f/0" | "f#/0" | "g/0" | "g#/0" | "a/0" | "a#/0" | "b/0" | "c/1" | "c#/1" | "d/1" | "d#/1" | "e/1" | "f/1" | "f#/1" | "g/1" | "g#/1" | "a/1" | "a#/1" | "b/1" | "c/2" | "c#/2" | "d/2" | "d#/2" | "e/2" | "f/2" | "f#/2" | "g/2" | "g#/2" | "a/2" | "a#/2" | "b/2" | "c/3" | "c#/3" | "d/3" | "d#/3" | "e/3" | "f/3" | "f#/3" | "g/3" | "g#/3" | "a/3" | "a#/3" | "b/3" | "c/4" | "c#/4" | "d/4" | "d#/4" | "e/4" | "f/4" | "f#/4" | "g/4" | "g#/4" | "a/4" | "a#/4" | "b/4" | "c/5" | "c#/5" | "d/5" | "d#/5" | "e/5" | "f/5" | "f#/5" | "g/5" | "g#/5" | "a/5" | "a#/5" | "b/5" | "c/6" | "c#/6" | "d/6" | "d#/6" | "e/6" | "f/6" | "f#/6" | "g/6" | "g#/6" | "a/6" | "a#/6" | "b/6" | "c/7" | "c#/7" | "d/7" | "d#/7" | "e/7" | "f/7" | "f#/7" | "g/7" | "g#/7" | "a/7" | "a#/7" | "b/7" | "c/8" | "c#/8" | "d/8" | "d#/8" | "e/8" | "f/8" | "f#/8" | "g/8" | "g#/8" | "a/8" | "a#/8" | "b/8"

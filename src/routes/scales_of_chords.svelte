@@ -1,7 +1,7 @@
 <script lang="ts">
   import StaffNotation, { Articulation as StaffArticulation } from '$lib/components/StaffNotation.svelte';
   import TabNotation from '$lib/components/TabNotation.svelte';
-  import { guitarStandardTuning, pitchUp } from '$lib/util';
+  import { guitarStandardTuning, pitchUp, straightenOctaves } from '$lib/util';
   import type { ChordQuality, OctaveAwarePitch } from '$lib/util';
 
 
@@ -18,15 +18,14 @@
     let startingFret = 0;
 
     let [rootNote] = scale;
-    let [pitchName, octave] = rootNote.split('/');
+    let [_pitchName, octave] = rootNote.split('/');
 
-    // Raising the starting fret until reaching the root note
-    // for (let i = 0; true; i++) {
-    //   if (pitchUp(guitarStandardTuning['6'], i) == rootNote) {
-    //     startingFret = i;
-    //     break;
-    //   }
-    // }
+
+    function rotation(items, element, count) {
+      let idxA = items.indexOf(element);
+      let idxB = (idxA + count) % items.length;
+      return items[idxB];
+    }
 
     return scale.map((pitch, pitchIdx) => {
       let relativeScale = [
@@ -34,17 +33,16 @@
         ...scale.slice(0, pitchIdx),
       ];
 
-      console.log(pitch, relativeScale)
+      let intervals = [0, 2, 4, 6];
 
-      let intervals = [1, 5, 7, 11];
-
-      let pitches = intervals.map(interval => {
-        let pitchIdx = interval % scale.length;
-        let octaveDiff = Math.floor(interval / scale.length);
-        return `${relativeScale[pitchIdx]}/${octave + octaveDiff}` as OctaveAwarePitch
+      let pitches = intervals.map((interval) => {
+        let newPitch = rotation(relativeScale, pitch, interval);
+        return `${newPitch}/${octave}` as OctaveAwarePitch
       });
 
-      return { duration: '16', pitches } as StaffArticulation;
+      let articulations = { duration: '16', pitches: straightenOctaves(pitches) } as StaffArticulation;
+      console.log(articulations.pitches)
+      return articulations;
     });
 
   }
@@ -76,16 +74,26 @@
   //   emaj7,
   // ]
 
-  let eMaj7DiminishedScaleOfChords = makeScaleOfChordsStaff([
+  // let eMaj7DiminishedScaleOfChords = makeScaleOfChordsStaff([
+  //   'e/3',
+  //   'f#/3',
+  //   'g#/3',
+  //   'a/4',
+  //   'b/4',
+  //   'c/4',
+  //   'c#/4',
+  //   'd#/4',
+  // ])
+
+  let cMaj7DiminishedScaleOfChords = makeScaleOfChordsStaff([
+    'c/3',
+    'd/3',
     'e/3',
-    'f#/3',
+    'f/3',
+    'g/3',
     'g#/3',
     'a/4',
     'b/4',
-    'c/4',
-    'c#/4',
-    'd#/4',
-    'e/4',
   ])
   
   // let threeNoteVoicings = eMaj7DiminishedScaleOfChords.map(excludeThe5th);
@@ -96,6 +104,6 @@
 
 <h1>Scales of Chords</h1>
 
-<StaffNotation articulations={eMaj7DiminishedScaleOfChords} />
+<StaffNotation articulations={cMaj7DiminishedScaleOfChords} />
 <!-- <StaffNotation articulations={threeNoteVoicings.map(chord => chord.staffArticulation)} /> -->
 <!-- <TabNotation articulations={threeNoteVoicings.map(chord => chord.tabArticulation)} /> -->
