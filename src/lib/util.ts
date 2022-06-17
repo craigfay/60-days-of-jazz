@@ -1,4 +1,4 @@
-export const chromaticScale: Pitch[] = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#']
+export const chromaticScale: Pitch[] = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b' ]
 
 export const guitarStandardTuning = {
   6: 'e/3',

@@ -47,6 +47,10 @@
 
 
     function articulationToStaveNote(a) {
+      // trying to remove octave
+      // let keys = a.pitches.map(p => p.split('/')[0])
+      console.log(a.pitches)
+
       let options = { keys: a.pitches, duration: a.duration }
       const staveNote = new VF.StaveNote(options)
 
