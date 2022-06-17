@@ -100,8 +100,8 @@
 
 <h1>Scales of Chords</h1>
 
-<StaffNotation articulations={eMaj7DiminishedScaleOfChords} />
-<StaffNotation articulations={cMaj7DiminishedScaleOfChords} />
+<StaffNotation keySignature="e" articulations={eMaj7DiminishedScaleOfChords} />
+<StaffNotation keySignature="c" articulations={cMaj7DiminishedScaleOfChords} />
 
 <!-- 
 <StaffNotation

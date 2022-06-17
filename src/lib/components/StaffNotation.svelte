@@ -9,9 +9,13 @@
 
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { octaveUnaware } from '$lib/util';
+  import type { Pitch } from '$lib/util';
+
   let target;
 
   export let clef = 'treble';
+  export let keySignature: Pitch | null = null;
 
   export let articulations: Articulation[] = [
     { pitches: ['a/3'], duration: '8' },
@@ -39,6 +43,17 @@
 
     const stave = new Stave(0, 0, 400);
 
+    let keySigNote = new VF.KeySigNote('E');
+    console.log(keySigNote)
+
+    const keyManager = new VF.KeyManager(keySignature ? keySignature.toUpperCase() : 'C');
+    console.log(keyManager)
+    // const pitchesInScale = Object.keys(keyManager.scaleMap)
+
+    if (keySignature) {
+      stave.addKeySignature(keySignature.toUpperCase());
+    }
+
     // Add a clef and time signature.
     stave.addClef(clef);
 
@@ -47,18 +62,22 @@
 
 
     function articulationToStaveNote(a) {
-      // trying to remove octave
-      // let keys = a.pitches.map(p => p.split('/')[0])
-      console.log(a.pitches)
-
       let options = { keys: a.pitches, duration: a.duration }
       const staveNote = new VF.StaveNote(options)
 
       a.pitches.forEach((pitch, idx) => {
+        let { accidental } = keyManager.getAccidental(octaveUnaware(pitch));
+        let keySignatureHasAccidental = Boolean(accidental);
+
+        // Skipping accidentals that are natural to the key signature
+        if (keySignature && keySignatureHasAccidental) return;
+
+        // Adding accidentals that aren't natural to the key signature
         if (pitch.includes('#')) {
           let modifier = new VF.Accidental('#');
           staveNote.addModifier(modifier, idx);
         }
+
       })
 
       return staveNote
