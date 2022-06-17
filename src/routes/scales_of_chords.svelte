@@ -15,6 +15,7 @@
 
   function makeScaleOfChords(rootNote = 'e/3', quality: ChordQuality) {
     let tabArticulation = { duration: '8', fingerings: [] };
+    let staffArticulation = { duration: '8', pitches: [] };
     let startingFret = 0;
 
     // Raising the starting fret until reaching the root note
@@ -24,6 +25,7 @@
         break;
       }
     }
+
 
 
   }

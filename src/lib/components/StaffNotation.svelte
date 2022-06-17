@@ -1,3 +1,10 @@
+<script context="module" lang="ts">
+  export type Articulation = {
+    fingerings: Array<{ str: number, fret: number }>,
+    duration: '1' | '4' | '8' | '16',
+  }
+</script>
+
 <script>
   import { onMount } from 'svelte';
   let target;

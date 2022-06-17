@@ -1,7 +1,14 @@
-<script>
+<script context="module" lang="ts">
+  export type Articulation = {
+    fingerings: Array<{ str: number, fret: number }>,
+    duration: '1' | '4' | '8' | '16',
+  }
+</script>
+
+<script lang="ts">
   import { onMount } from 'svelte';
 
-  export let articulations = [
+  export let articulations: Articulation[] = [
     { fingerings: [{ str: 6, fret: 5 }], duration: '16' },
     { fingerings: [{ str: 6, fret: 7 }], duration: '16' },
 

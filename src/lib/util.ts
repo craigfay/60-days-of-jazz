@@ -26,7 +26,21 @@ export function pitchUp(note, semitones) {
 }
 
 export function pitchDown(note, semitones) {
-  return pitchUp(note, 0 - semitones)
+  let [pitch, octave] = note.split('/');
+  let octaveNum = parseInt(octave);
+
+  let newPitch;
+  let newOctaveNum = octaveNum;
+
+  for (let i = chromaticScale.findIndex(n => n == pitch); i < semitones; i++) {
+    let scaleIdx = i - 1;
+    if (scaleIdx == -1) scaleIdx = chromaticScale.length - 1;
+
+    newPitch = chromaticScale[scaleIdx];
+    if (scaleIdx + 1 == chromaticScale.length) { newOctaveNum -= 1 }
+  }
+
+  return `${newPitch}/${newOctaveNum}`;
 }
 
 export type ChordQuality = {
