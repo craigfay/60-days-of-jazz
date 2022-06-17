@@ -33,7 +33,8 @@
         ...scale.slice(0, pitchIdx),
       ];
 
-      let intervals = [0, 2, 4, 6];
+      // 1st, 5th, 7th, 3rd
+      let intervals = [0, 4, 6, 10];
 
       let pitches = intervals.map((interval) => {
         let newPitch = rotation(relativeScale, pitch, interval);
