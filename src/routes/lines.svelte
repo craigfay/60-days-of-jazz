@@ -1,10 +1,15 @@
 
 <script lang="ts">
-  import TabNotation, { Articulation } from '$lib/components/TabNotation.svelte'
+  import TabNotation from '$lib/components/TabNotation.svelte'
 
 </script>
 
-<h1>Lines on the 1 of Emaj</h1>
+<h1>Melodic Lines Over The 1 of Emaj</h1>
+
+<p>
+  The 3-5-7 triad sounds the most representative of this chord.
+  A few triads sound particularly good to me over the 1: b3-3-b5, b5-5-6, 6-b7-7.
+</p>
 
 <p>flat 7 -> 6</p>
 <TabNotation
