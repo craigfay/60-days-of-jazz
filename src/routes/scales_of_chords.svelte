@@ -45,7 +45,6 @@
 				pitches: straightenOctaves(pitches)
 			} as StaffArticulation;
 
-			console.log('A', articulations.pitches);
 			return articulations;
 		});
 	}
@@ -68,14 +67,14 @@
 
 
 	let eMaj7DiminishedScaleOfChords = makeScaleOfChordsStaff([
-	  'e/3',
-	  'f#/3',
-	  'g#/3',
-	  'a/3',
-	  'b/3',
-	  'c/4',
-	  'c#/4',
-	  'd#/4',
+	  'e/4',
+	  'f#/4',
+	  'g#/4',
+	  'a/4',
+	  'b/4',
+	  'c/5',
+	  'c#/5',
+	  'd#/5',
 	])
 
   let cMaj6DimScale: OctaveAwarePitch[] = [
@@ -91,24 +90,11 @@
 
 	let cMaj7DiminishedScaleOfChords = makeScaleOfChordsStaff(cMaj6DimScale);
 
-  for (let i = 0; i < 8; i++) {
-	  console.log(rotation(cMaj6DimScale, 'c/4', i));
-  }
-
 
 </script>
 
-<h1>Scales of Chords</h1>
-
-<StaffNotation keySignature="e" articulations={eMaj7DiminishedScaleOfChords} />
-<StaffNotation keySignature="c" articulations={cMaj7DiminishedScaleOfChords} />
-
-<!-- 
-<StaffNotation
-	articulations={[
-		{
-			duration: '8',
-			pitches: ['c/4', 'g/4', 'a/5', 'e/6']
-		}
-	]}
-/> -->
+<div class="p-4">
+  <h1>Scales of Chords</h1>
+  <StaffNotation keySignature="e" articulations={eMaj7DiminishedScaleOfChords} />
+  <StaffNotation keySignature="c" articulations={cMaj7DiminishedScaleOfChords} />
+</div>

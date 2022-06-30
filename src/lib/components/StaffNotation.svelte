@@ -35,20 +35,27 @@
     const { Vex } = VF;
     const { Renderer, Stave } = Vex.Flow;
 
-    // Create an SVG renderer and attach it to the DIV element named "boo".
-    const renderer = new Renderer(target, Renderer.Backends.SVG);
+    // const renderer = new Renderer(target, Renderer.Backends.SVG);
+    // renderer.resize(target.offsetWidth, target.offsetHeight);
 
     // Configure the rendering context.
-    const context = renderer.getContext();
+    // const context = renderer.getContext();
+    let context = new VF.SVGContext(target);
+    // context.setViewBox(target.offsetWidth + 1, 120, 0, 0)
+    context.setViewBox(`0 -40 ${target.offsetWidth + 1} 200`)
 
-    const stave = new Stave(0, 0, 400);
+    const svg = context.svg;
+    // svg.setAttribute("preserveAspectRatio", "xMinYMax meet")
 
-    let keySigNote = new VF.KeySigNote('E');
-    console.log(keySigNote)
+
+    // context.resize(target.offsetWidth, target.offsetHeight)
+    // context.setViewBox()
+    // context.scale(0.5, 0.5)
+
+    const stave = new Stave(0, 0, target.offsetWidth);
+    stave.setContext(context);
 
     const keyManager = new VF.KeyManager(keySignature ? keySignature.toUpperCase() : 'C');
-    console.log(keyManager)
-    // const pitchesInScale = Object.keys(keyManager.scaleMap)
 
     if (keySignature) {
       stave.addKeySignature(keySignature.toUpperCase());
@@ -93,6 +100,5 @@
   });
 </script>
 
-<div class="w-full p-4">
-  <svg viewBox="0 0 401 125" class="mx-auto w-full" bind:this={target} />
-</div>
+
+<div class="w-full flex" bind:this={target}></div>
